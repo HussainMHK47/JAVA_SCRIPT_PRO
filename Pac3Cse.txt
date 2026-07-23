@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Grading System - Secure Login</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
+body{display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#4facfe,#00c6ff);padding:20px;}
+.container{width:100%;max-width:500px;background:#fff;padding:30px;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.2);}
+h2{text-align:center;color:#222;margin-bottom:8px;}
+.subtitle{text-align:center;color:#666;font-size:15px;margin-bottom:25px;}
+label{display:block;font-weight:bold;margin-bottom:8px;color:#444;}
+input{width:100%;padding:12px;border:2px solid #ddd;border-radius:10px;font-size:16px;margin-bottom:10px;transition:border-color 0.3s;}
+input:focus{outline:none;border-color:#2196f3;}
+input.error{border-color:#f44336;}
+input.success{border-color:#4caf50;}
+.error-msg{color:#f44336;font-size:13px;margin-top:-5px;margin-bottom:15px;display:none;}
+.btn-group{display:flex;gap:10px;margin-top:10px;}
+button{flex:1;padding:13px;border:none;border-radius:10px;background:#2196f3;color:#fff;font-size:16px;cursor:pointer;transition:background 0.3s;}
+button:hover{background:#1976d2;}
+button.secondary{background:#607d8b;}
+button.secondary:hover{background:#455a64;}
+button.danger{background:#f44336;flex:0 0 50px;}
+button.danger:hover{background:#d32f2f;}
+.subject-row{display:flex;gap:10px;margin-bottom:10px;}
+.subject-row input{margin-bottom:0;}
+.grade-info{margin-top:25px;}
+.grade-info h3{text-align:center;color:#333;margin-bottom:10px;}
+table{width:100%;border-collapse:collapse;}
+table td{padding:8px;border-bottom:1px solid #eee;}
+table tr:last-child td{border-bottom:none;}
+table td:last-child{text-align:right;}
+#result{margin-top:20px;padding:15px;border-radius:10px;text-align:center;font-size:18px;font-weight:bold;display:none;}
+.credit{position:fixed;bottom:15px;right:15px;color:white;font-size:15px;font-weight:bold;text-shadow:1px 1px 4px rgba(0,0,0,.5);}
+.hidden{display:none;}
+</style>
+</head>
+<body>
+
+
+<div class="container" id="loginContainer">
+<h2>🔐 Secure Login</h2>
+<p class="subtitle">Enter valid credentials to access the system</p>
+<form id="loginForm">
+<label for="email">Email Address</label>
+<input type="text" id="email" placeholder="example@domain.com">
+<div id="emailError" class="error-msg">Invalid email format.</div>
+
+<label for="password">Password</label>
+<input type="password" id="password" placeholder="Min 8 chars, 1 Upper, 1 Lower, 1 Number, 1 Special">
+<div id="passwordError" class="error-msg">Password must be 8+ chars with upper, lower, number, and special char.</div>
+
+<button type="submit" style="margin-top:15px;">Login</button>
+</form>
+</div>
+
+
+<div class="container hidden" id="gradeContainer">
+<h2>🎓 Symbiosis Institute of technology</h2>
+<p class="subtitle">Add subjects and marks to calculate final grade</p>
+
+<div id="subjectsContainer"></div>
+
+<div class="btn-group">
+<button type="button" class="secondary" onclick="addSubject()">+ Add Subject</button>
+<button type="button" onclick="calculateFinalGrade()">Calculate Grade</button>
+</div>
+
+<div class="grade-info">
+<h3>Grade Scale</h3>
+<table>
+<tr><td>A+</td><td>90% - 100%</td></tr>
+<tr><td>A</td><td>80% - 89%</td></tr>
+<tr><td>B</td><td>70% - 79%</td></tr>
+<tr><td>C</td><td>60% - 69%</td></tr>
+<tr><td>D</td><td>50% - 59%</td></tr>
+<tr><td>Fail</td><td>Below 50%</td></tr>
+</table>
+</div>
+
+<div id="result"></div>
+</div>
+
+<div class="credit">Designed by M Hussain Khan | PRN : 25070521505</div>
+
+<script>
+
+const loginForm = document.getElementById("loginForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const emailError = document.getElementById("emailError");
+const passwordError = document.getElementById("passwordError");
+const loginContainer = document.getElementById("loginContainer");
+const gradeContainer = document.getElementById("gradeContainer");
+
+function validateEmail(email) {
+const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+return re.test(String(email).toLowerCase());
+}
+
+function validatePassword(pwd) {
+const minLength = /.{8,}/;
+const hasUpper = /[A-Z]/;
+const hasLower = /[a-z]/;
+const hasNumber = /[0-9]/;
+const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/;
+return minLength.test(pwd) && hasUpper.test(pwd) && hasLower.test(pwd) && hasNumber.test(pwd) && hasSpecial.test(pwd);
+}
+
+loginForm.addEventListener("submit", function(e) {
+e.preventDefault();
+let isValid = true;
+
+const email = emailInput.value.trim();
+const password = passwordInput.value;
+
+if (!validateEmail(email)) {
+emailError.style.display = "block";
+emailInput.classList.add("error");
+emailInput.classList.remove("success");
+isValid = false;
+} else {
+emailError.style.display = "none";
+emailInput.classList.remove("error");
+emailInput.classList.add("success");
+}
+
+if (!validatePassword(password)) {
+passwordError.style.display = "block";
+passwordInput.classList.add("error");
+passwordInput.classList.remove("success");
+isValid = false;
+} else {
+passwordError.style.display = "none";
+passwordInput.classList.remove("error");
+passwordInput.classList.add("success");
+}
+
+if (isValid) {
+loginContainer.classList.add("hidden");
+gradeContainer.classList.remove("hidden");
+addSubject(); 
+}
+});
+
+
+let subjectCount = 0;
+
+function addSubject() {
+subjectCount++;
+const container = document.getElementById('subjectsContainer');
+const div = document.createElement('div');
+div.className = 'subject-row';
+div.id = `subject-${subjectCount}`;
+div.innerHTML = `
+<input type="text" placeholder="Subject Name" class="sub-name" required>
+<input type="number" placeholder="Marks" class="sub-marks" min="0" max="100" required>
+<button type="button" class="danger" onclick="removeSubject(${subjectCount})">×</button>
+`;
+container.appendChild(div);
+}
+
+function removeSubject(id) {
+const el = document.getElementById(`subject-${id}`);
+if(el) el.remove();
+}
+
+function calculateFinalGrade() {
+const names = document.querySelectorAll('.sub-name');
+const marksInputs = document.querySelectorAll('.sub-marks');
+const resultDiv = document.getElementById('result');
+
+let totalMarks = 0;
+let count = 0;
+let valid = true;
+let subjectDetails = [];
+
+names.forEach((input, index) => {
+const name = input.value.trim();
+const marks = parseFloat(marksInputs[index].value);
+
+if(name === "" || isNaN(marks)) { valid = false; return; }
+if(marks < 0 || marks > 100) { valid = false; return; }
+
+totalMarks += marks;
+count++;
+subjectDetails.push({name, marks});
+});
+
+if(!valid || count === 0) {
+resultDiv.style.display = "block";
+resultDiv.style.background = "#ffebee";
+resultDiv.style.color = "#d32f2f";
+resultDiv.innerHTML = "Please fill all subject names and valid marks (0-100).";
+return;
+}
+
+const average = totalMarks / count;
+let grade = "";
+let performance = "";
+
+if(average >= 90){grade="A+";performance="Outstanding";}
+else if(average >= 80){grade="A";performance="Excellent";}
+else if(average >= 70){grade="B";performance="Very Good";}
+else if(average >= 60){grade="C";performance="Good";}
+else if(average >= 50){grade="D";performance="Pass";}
+else{grade="Fail";performance="Needs Improvement";}
+
+let html = `<h3>Final Result</h3><br>`;
+html += `📊 <b>Total:</b> ${totalMarks} / ${count * 100}<br>`;
+html += `📈 <b>Average:</b> ${average.toFixed(2)}%<br>`;
+html += `🏅 <b>Grade:</b> ${grade}<br>`;
+html += `⭐ <b>Performance:</b> ${performance}<br><br>`;
+html += `<small>Subject Breakdown:</small><br>`;
+subjectDetails.forEach(sub => {
+html += `${sub.name}: <b>${sub.marks}</b><br>`;
+});
+
+resultDiv.style.display = "block";
+if(grade === "Fail"){
+resultDiv.style.background = "#ffebee";
+resultDiv.style.color = "#c62828";
+}else{
+resultDiv.style.background = "#e8f5e9";
+resultDiv.style.color = "#2e7d32";
+}
+resultDiv.innerHTML = html;
+}
+</script>
+
+</body>
+</html>   
