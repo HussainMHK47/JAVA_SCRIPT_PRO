@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Grading System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:linear-gradient(135deg,#4facfe,#00c6ff);
+    padding:20px;
+}
+.container{
+    width:430px;
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+}
+h2{
+    text-align:center;
+    color:#222;
+    margin-bottom:8px;
+}
+.subtitle{
+    text-align:center;
+    color:#666;
+    font-size:15px;
+    margin-bottom:25px;
+}
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+    color:#444;
+}
+input{
+    width:100%;
+    padding:12px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    margin-bottom:20px;
+}
+input:focus{
+    outline:none;
+    border-color:#2196f3;
+}
+button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    background:#2196f3;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+button:hover{
+    background:#1976d2;
+}
+.grade-info{
+    margin-top:25px;
+}
+.grade-info h3{
+    text-align:center;
+    color:#333;
+    margin-bottom:10px;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+table td{
+    padding:8px;
+    border-bottom:1px solid #eee;
+}
+table tr:last-child td{
+    border-bottom:none;
+}
+table td:last-child{
+    text-align:right;
+}
+#result{
+    margin-top:20px;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    display:none;
+}
+.credit{
+    position:fixed;
+    bottom:15px;
+    right:15px;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    text-shadow:1px 1px 4px rgba(0,0,0,.5);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🎓 Student Grading System</h2>
+
+<p class="subtitle">
+Enter your marks to calculate your grade instantly.
+</p>
+
+<form id="gradeForm">
+
+<label for="marks">Enter Marks (0 - 100)</label>
+
+<input type="number" id="marks" placeholder="Example: 85">
+
+<button type="submit">Calculate Grade</button>
+
+</form>
+
+<div class="grade-info">
+
+<h3>Grade Scale</h3>
+
+<table>
+<tr><td>A+</td><td>90 - 100</td></tr>
+<tr><td>A</td><td>80 - 89</td></tr>
+<tr><td>B</td><td>70 - 79</td></tr>
+<tr><td>C</td><td>60 - 69</td></tr>
+<tr><td>D</td><td>50 - 59</td></tr>
+<tr><td>Fail</td><td>Below 50</td></tr>
+</table>
+
+</div>
+
+<div id="result"></div>
+
+</div>
+
+<div class="credit">
+Designed by M Hussain Khan | PRN : 25070521505
+</div>
+
+<script>
+document.getElementById("gradeForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let marks=document.getElementById("marks").value;
+let result=document.getElementById("result");
+
+if(marks==""){
+result.style.display="block";
+result.style.background="#ffebee";
+result.style.color="#d32f2f";
+result.innerHTML="Please enter your marks.";
+return;
+}
+
+marks=Number(marks);
+
+if(marks<0||marks>100){
+result.style.display="block";
+result.style.background="#ffebee";
+result.style.color="#d32f2f";
+result.innerHTML="Marks must be between 0 and 100.";
+return;
+}
+
+let grade="";
+let performance="";
+
+if(marks>=90){
+grade="A+";
+performance="Outstanding";
+}
+else if(marks>=80){
+grade="A";
+performance="Excellent";
+}
+else if(marks>=70){
+grade="B";
+performance="Very Good";
+}
+else if(marks>=60){
+grade="C";
+performance="Good";
+}
+else if(marks>=50){
+grade="D";
+performance="Pass";
+}
+else{
+grade="Fail";
+performance="Needs Improvement";
+}
+
+result.style.display="block";
+
+if(grade=="Fail"){
+result.style.background="#ffebee";
+result.style.color="#c62828";
+}
+else{
+result.style.background="#e8f5e9";
+result.style.color="#2e7d32";
+}
+
+result.innerHTML=
+"<h3>Result</h3><br>"+
+"📊 <b>Marks:</b> "+marks+" / 100<br><br>"+
+"🏅 <b>Grade:</b> "+grade+"<br><br>"+
+"⭐ <b>Performance:</b> "+performance;
+
+});
+</script>
+
+</body>
+</html>
