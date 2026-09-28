@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Admission Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="form-card">
+    <h1>Gym Admission</h1>
+    <p>Fill in your details to get started</p>
+    <div class="progress-bar"><div id="bar"></div></div>
+    
+    <form id="gymForm" novalidate>
+      <div class="group" id="g-name">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="e.g. Hussain Khan" autocomplete="off">
+        <span class="err-msg" id="e-name"></span>
+        <span class="ok-msg">Looks good</span>
+      </div>
+
+      <div class="row">
+        <div class="group" id="g-age">
+          <label>Age</label>
+          <input type="number" id="age" placeholder="16-70" min="16" max="70">
+          <span class="err-msg" id="e-age"></span>
+          <span class="ok-msg">Valid</span>
+        </div>
+        <div class="group" id="g-gender">
+          <label>Gender</label>
+          <select id="gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+          <span class="err-msg" id="e-gender"></span>
+          <span class="ok-msg">Selected</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="group" id="g-phone">
+          <label>Phone</label>
+          <input type="tel" id="phone" placeholder="10-digit number" maxlength="10" inputmode="numeric">
+          <span class="err-msg" id="e-phone"></span>
+          <span class="ok-msg">Valid</span>
+        </div>
+        <div class="group" id="g-email">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="you@example.com" autocomplete="off">
+          <span class="err-msg" id="e-email"></span>
+          <span class="ok-msg">Valid</span>
+        </div>
+      </div>
+
+      <div class="group" id="g-plan">
+        <label>Membership Plan</label>
+        <select id="plan">
+          <option value="">Choose a plan</option>
+          <option value="monthly">Monthly - 2,499</option>
+          <option value="quarterly">Quarterly - 6,999</option>
+          <option value="yearly">Yearly - 19,999</option>
+          <option value="lifetime">Lifetime - 99,999</option>
+        </select>
+        <span class="err-msg" id="e-plan"></span>
+        <span class="ok-msg">Selected</span>
+      </div>
+
+      <div class="group" id="g-address">
+        <label>Address</label>
+        <textarea id="address" rows="3" placeholder="House / Flat, Street, City, PIN"></textarea>
+        <span class="err-msg" id="e-address"></span>
+        <span class="ok-msg">Filled</span>
+      </div>
+
+      <button type="submit" class="btn">Submit Admission</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

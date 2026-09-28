@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.form-card {
+  background: #1a1a2e;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+.form-card h1 {
+  text-align: center;
+  color: #00e676;
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.form-card p {
+  text-align: center;
+  color: #888;
+  margin-bottom: 28px;
+  font-size: .9rem;
+}
+
+.group {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.group label {
+  display: block;
+  color: #ccc;
+  font-size: .85rem;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.group input,
+.group select,
+.group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: #16213e;
+  color: #fff;
+  font-size: .95rem;
+  transition: border-color .3s, box-shadow .3s;
+  outline: none;
+}
+
+.group input:focus,
+.group select:focus,
+.group textarea:focus {
+  border-color: #00e676;
+  box-shadow: 0 0 0 3px rgba(0, 230, 118, .15);
+}
+
+.group.error input,
+.group.error select,
+.group.error textarea {
+  border-color: #ff5252;
+}
+
+.group.success input,
+.group.success select,
+.group.success textarea {
+  border-color: #00e676;
+}
+
+.err-msg {
+  color: #ff5252;
+  font-size: .78rem;
+  margin-top: 5px;
+  display: none;
+}
+
+.ok-msg {
+  color: #00e676;
+  font-size: .78rem;
+  margin-top: 5px;
+  display: none;
+}
+
+.group.error .err-msg {
+  display: block;
+}
+
+.group.success .ok-msg {
+  display: block;
+}
+
+.row {
+  display: flex;
+  gap: 14px;
+}
+
+.row .group {
+  flex: 1;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #00e676, #00b0ff);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 230, 118, .3);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.progress-bar {
+  height: 4px;
+  background: #333;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.progress-bar div {
+  height: 100%;
+  background: linear-gradient(90deg, #00e676, #00b0ff);
+  width: 0%;
+  transition: width .4s;
+}

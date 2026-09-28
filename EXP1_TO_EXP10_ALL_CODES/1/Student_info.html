@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Info - SIT Nagpur</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            background: #f4f4f4; 
+            padding: 20px; 
+        }
+        .box { 
+            background: white; 
+            padding: 20px; 
+            display: inline-block; 
+            text-align: left; 
+            border: 1px solid #ccc; 
+        }
+        input, select, button { 
+            width: 100%; 
+            margin: 5px 0; 
+            padding: 8px; 
+            box-sizing: border-box; 
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            background: white; 
+        }
+        th, td { 
+            border: 1px solid #ccc; 
+            padding: 8px; 
+            text-align: center; 
+        }
+        th { 
+            background: #ff0000; 
+            color: white; 
+        }
+        a { 
+            display: inline-block; 
+            margin-top: 15px; 
+            text-decoration: none; 
+            background: #2e9100; 
+            color: white; 
+            padding: 10px 20px; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Symbiosis Student Information</h1>
+
+    <div class="box">
+        <h3>Add Student</h3>
+        <input type="text" id="name" placeholder="Name">
+        <input type="number" id="age" placeholder="Age">
+        <select id="branch">
+            <option>Computer Science</option>
+            <option>Electronics</option>
+            <option>Mechanical</option>
+        </select>
+        <select id="year">
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+        </select>
+        <button onclick="add()">Add</button>
+    </div>
+
+    <div class="box" style="text-align:center;">
+        <table id="tbl">
+            <tr><th>Name</th><th>Age</th><th>Branch</th><th>Year</th></tr>
+        </table>
+    </div>
+
+    <br>
+    <a href="department.html">Proceed</a>
+
+    <script>
+        function add() {
+            var n = document.getElementById("name").value;
+            var a = document.getElementById("age").value;
+            var b = document.getElementById("branch").value;
+            var y = document.getElementById("year").value;
+
+            if(n === "" || a === "") { 
+                alert("Fill all fields"); 
+                return; 
+            }
+
+            var row = "<tr><td>" + n + "</td><td>" + a + "</td><td>" + b + "</td><td>" + y + "</td></tr>";
+            document.getElementById("tbl").innerHTML += row;
+
+            document.getElementById("name").value = "";
+            document.getElementById("age").value = "";
+        }
+    </script>
+
+</body>
+</html>

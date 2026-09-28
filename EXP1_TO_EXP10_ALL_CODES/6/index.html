@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detector</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<h2>Email Validator & Text Reverser</h2>
+<div class="tool-section">
+<h3>Email Validation</h3>
+<div class="input-group">
+<label for="emailInput">Enter Emails (comma or space separated): </label>
+<input type="text" id="emailInput" placeholder="user@example.com, test@domain.org">
+</div>
+<button onclick="processEmails()" class="btn-email">Validate Emails</button>
+<div id="emailResults" class="result-box"></div>
+</div>
+<hr class="divider">
+<div class="tool-section">
+<h3>Reverse Paragraph</h3>
+<div class="input-group">
+<label for="reverseInput">Enter Text to Reverse:</label>
+<input type="text" id="reverseInput" placeholder="Type your paragraph here...">
+</div>
+<button onclick="reverseText()" class="btn-reverse">Reverse Text</button>
+<div id="reverseResults" class="result-box"></div>
+</div>
+<hr class="divider">
+<div class="tool-section">
+<h3>Vowel Counter</h3>
+<div class="input-group">
+<label for="vowelInput">Enter Paragraph to Count Vowels:</label>
+<input type="text" id="vowelInput" placeholder="Type your paragraph here...">
+</div>
+<button onclick="countVowels()" class="btn-email" style="background: linear-gradient(45deg, #11998e, #38ef7d);">Count Vowels</button>
+<div id="vowelResults" class="result-box" style="border-left-color: #38ef7d; background: linear-gradient(90deg, rgba(56, 239, 125, 0.1), transparent);"></div>
+</div>
+</div>
+<script>
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+function processEmails() {
+const input = document.getElementById('emailInput').value;
+const resultsDiv = document.getElementById('emailResults');
+resultsDiv.innerHTML = '';
+resultsDiv.style.display = 'none';
+if (!input.trim()) {
+    resultsDiv.innerHTML = '<p class="error">Please enter email addresses.</p>';
+    resultsDiv.style.display = 'block';
+    return;
+}
+const validEmails = [];
+const invalidEmails = [];
+const potentialEmails = input.split(/[\s,]+/);
+potentialEmails.forEach(email => {
+    if (email.trim() === '') return;
+    if (emailRegex.test(email)) {
+        validEmails.push(email);
+    } else {
+        invalidEmails.push(email);
+    }
+});
+const domainCounts = {};
+validEmails.forEach(email => {
+    const domain = email.split('@')[1];
+    domainCounts[domain] = (domainCounts[domain] || 0) + 1;
+});
+let output = '<h4>Analysis Results</h4>';
+output += '<div class="stat-grid">';
+output += '<div class="stat-item"><strong>Valid:</strong> <span class="count-green">' + validEmails.length + '</span></div>';
+output += '<div class="stat-item"><strong>Invalid:</strong> <span class="count-red">' + invalidEmails.length + '</span></div>';
+output += '</div>';
+if (validEmails.length > 0) {
+    output += '<p><strong>Valid Emails:</strong></p><ul class="email-list valid">';
+    validEmails.forEach(e => output += '<li>' + e + '</li>');
+    output += '</ul>';
+}
+if (invalidEmails.length > 0) {
+    output += '<p><strong>Invalid Entries:</strong></p><ul class="email-list invalid">';
+    invalidEmails.forEach(e => output += '<li>' + e + '</li>');
+    output += '</ul>';
+}
+if (Object.keys(domainCounts).length > 0) {
+    output += '<p><strong>Domains:</strong></p><ul class="domain-list">';
+    for (const domain in domainCounts) {
+        output += '<li>' + domain + ' (' + domainCounts[domain] + ')</li>';
+    }
+    output += '</ul>';
+}
+resultsDiv.innerHTML = output;
+resultsDiv.style.display = 'block';
+}
+
+function reverseText() {
+const input = document.getElementById('reverseInput').value;
+const resultsDiv = document.getElementById('reverseResults');
+resultsDiv.innerHTML = '';
+resultsDiv.style.display = 'none';
+if (!input.trim()) {
+    resultsDiv.innerHTML = '<p class="error">Please enter text to reverse.</p>';
+    resultsDiv.style.display = 'block';
+    return;
+}
+const reversedString = input.split('').reverse().join('');
+let output = '<h4>Reversed Output</h4>';
+output += '<div class="reverse-item"><strong>Full Reverse:</strong><br><span class="code-text">' + reversedString + '</span></div>';
+resultsDiv.innerHTML = output;
+resultsDiv.style.display = 'block';
+}
+
+function countVowels() {
+const input = document.getElementById('vowelInput').value;
+const resultsDiv = document.getElementById('vowelResults');
+resultsDiv.innerHTML = '';
+resultsDiv.style.display = 'none';
+if (!input.trim()) {
+    resultsDiv.innerHTML = '<p class="error">Please enter text to count vowels.</p>';
+    resultsDiv.style.display = 'block';
+    return;
+}
+const vowels = input.match(/[aeiou]/gi);
+const vowelCount = vowels ? vowels.length : 0;
+const vowelCounts = { a: 0, e: 0, i: 0, o: 0, u: 0 };
+input.toLowerCase().split('').forEach(char => {
+    if (vowelCounts.hasOwnProperty(char)) {
+        vowelCounts[char]++;
+    }
+});
+let output = '<h4>Vowel Analysis</h4>';
+output += '<div class="stat-grid">';
+output += '<div class="stat-item"><strong>Total Vowels:</strong> <span class="count-green">' + vowelCount + '</span></div>';
+output += '</div>';
+output += '<p><strong>Breakdown:</strong></p><ul class="domain-list">';
+for (const vowel in vowelCounts) {
+    output += '<li>' + vowel.toUpperCase() + ': ' + vowelCounts[vowel] + '</li>';
+}
+output += '</ul>';
+resultsDiv.innerHTML = output;
+resultsDiv.style.display = 'block';
+}
+</script>
+</body>
+</html>

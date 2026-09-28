@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Billing Calculator with Popup</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; position: relative;">
+<div style="position: fixed; bottom: 10px; right: 15px; color: rgba(255, 255, 255, 0.6); font-size: 24px; font-weight: bold; z-index: 1000;">
+CREATED BY: 25070521505
+</div>
+<div style="max-width: 550px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+<h2 style="text-align: center; color: #4a4a4a; margin-bottom: 25px; font-size: 28px; border-bottom: 3px solid #667eea; padding-bottom: 15px;">Billing Calculator</h2>
+<div style="margin-bottom: 15px;">
+<label style="display: block; margin-bottom: 5px; color: #555; font-weight: 600;">Customer Name:</label>
+<input type="text" id="customerName" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box;">
+</div>
+<div style="margin-bottom: 15px;">
+<label style="display: block; margin-bottom: 5px; color: #555; font-weight: 600;">Product Name:</label>
+<input type="text" id="productName" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box;">
+</div>
+<div style="margin-bottom: 15px;">
+<label style="display: block; margin-bottom: 5px; color: #555; font-weight: 600;">Price (₹):</label>
+<input type="number" id="price" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box;">
+</div>
+<div style="margin-bottom: 20px;">
+<label style="display: block; margin-bottom: 5px; color: #555; font-weight: 600;">Quantity:</label>
+<input type="number" id="quantity" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box;">
+</div>
+<button onclick="calculateBill()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer;">Calculate Bill</button>
+</div>
+
+<div id="billModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
+<div style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 90%; max-width: 500px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative;">
+<span onclick="closeModal()" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 20px;">&times;</span>
+<div id="modalContent"></div>
+<button onclick="closeModal()" style="width: 100%; padding: 10px; margin-top: 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Close</button>
+</div>
+</div>
+
+<script>
+function calculateBill() {
+const customerName = document.getElementById('customerName').value;
+const productName = document.getElementById('productName').value;
+const price = parseFloat(document.getElementById('price').value);
+const quantity = parseInt(document.getElementById('quantity').value);
+
+if (!customerName || !productName || isNaN(price) || isNaN(quantity)) {
+    alert("Please fill all fields correctly.");
+    return;
+}
+
+const subtotal = price * quantity;
+const gstRate = 0.18;
+const gstAmount = subtotal * gstRate;
+const totalBill = subtotal + gstAmount;
+
+const billData = { customer: customerName, product: productName, sub: subtotal, tax: gstAmount, total: totalBill, p: price, q: quantity };
+const { customer, product, sub, tax, total, p, q } = billData;
+
+const output = `
+<h3 style="color: #4a4a4a; margin-top: 0; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Bill Summary</h3>
+<p style="margin: 8px 0; color: #333;"><strong>Customer Name:</strong> ${customer}</p>
+<p style="margin: 8px 0; color: #333;"><strong>Product Name:</strong> ${product}</p>
+<p style="margin: 8px 0; color: #333;"><strong>Price:</strong> ₹${p.toFixed(2)}</p>
+<p style="margin: 8px 0; color: #333;"><strong>Quantity:</strong> ${q}</p>
+<p style="margin: 8px 0; color: #333; font-size: 18px;"><strong>Subtotal:</strong> ₹${sub.toFixed(2)}</p>
+<p style="margin: 8px 0; color: #333;"><strong>GST (18%):</strong> ₹${tax.toFixed(2)}</p>
+<p style="margin: 8px 0; color: #28a745; font-size: 20px; font-weight: bold; border-top: 2px solid #28a745; padding-top: 10px;"><strong>Total Bill:</strong> ₹${total.toFixed(2)}</p>
+`;
+
+document.getElementById('modalContent').innerHTML = output;
+document.getElementById('billModal').style.display = "block";
+}
+
+function closeModal() {
+document.getElementById('billModal').style.display = "none";
+}
+
+window.onclick = function(event) {
+const modal = document.getElementById('billModal');
+if (event.target == modal) {
+    modal.style.display = "none";
+}
+}
+</script>
+</body>
+</html>
