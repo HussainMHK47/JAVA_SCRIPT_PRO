@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniClass — Your Daily Mission Control</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+:root{--bg:#f7faf3;--green:#78c95d;--green-dark:#377d3d;--green-soft:#eaf7df;--ink:#263d2d;--muted:#879188;--line:#e3eadf;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Nunito',Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.page{width:min(1115px,calc(100% - 36px));margin:24px auto 45px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px;gap:15px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-icon{width:48px;height:48px;border-radius:50%;background:#d5f6a9;border:5px solid #397d40;display:grid;place-items:center;color:#377d3d;font-size:25px;box-shadow:0 3px 0 #b6dba2}
+.brand-name{font-size:23px;font-weight:900;line-height:1.1;letter-spacing:-.5px}
+.brand-tag{font-size:10px;letter-spacing:1.5px;font-weight:900;color:#7e8d7f;margin-top:4px}
+.status{display:flex;align-items:center;gap:7px;background:white;border:1px solid var(--line);border-radius:30px;padding:9px 14px;font-size:10px;font-weight:900;letter-spacing:.7px}
+.status-dot{height:9px;width:9px;background:#80cd69;border-radius:50%;box-shadow:0 0 0 4px #e7f6df}
+.hero{background:#eaf8df;border:1px solid #d5eacb;border-radius:29px;min-height:340px;padding:36px 48px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;overflow:hidden;margin-bottom:20px}
+.pill{display:inline-flex;align-items:center;gap:7px;border-radius:24px;background:#fff;padding:9px 14px;color:#3d7c43;font-size:10px;font-weight:900;letter-spacing:.7px}
+.hero h1{font-size:clamp(36px,4vw,52px);line-height:1.1;letter-spacing:-1.7px;margin:19px 0 16px;font-weight:900;max-width:490px}
+.hero h1 span{display:block;color:#61b94f}
+.hero p{color:#7b8b78;font-size:13px;margin:0 0 24px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:white;color:#36543b;padding:13px 19px;border-radius:14px;font-size:12px;font-weight:900;transition:transform .15s,filter .15s}
+.btn:hover{transform:translateY(-2px);filter:brightness(.98)}
+.btn.primary{background:var(--green);border-color:#70bd59;box-shadow:0 4px 0 #4d9c43;color:#183c23}
+.mascot-area{height:255px;display:grid;place-items:center;position:relative}
+.orbit{position:absolute;width:225px;height:225px;border:1.5px dashed #a8d29a;border-radius:50%}
+.orbit:before{content:"";position:absolute;inset:17px;border:1.5px dashed #c2e0b5;border-radius:50%}
+.robot{z-index:1;position:relative;width:150px;height:190px;animation:bob 3s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.robot-head{position:absolute;left:24px;top:9px;width:102px;height:83px;background:#78cf60;border:4px solid #397e40;border-radius:43% 43% 35% 35%;z-index:3}
+.ear{position:absolute;width:20px;height:32px;background:#78cf60;border:4px solid #397e40;top:20px;border-radius:12px}
+.ear.left{left:12px;transform:rotate(22deg)}.ear.right{right:12px;transform:rotate(-22deg)}
+.eye{position:absolute;top:31px;width:18px;height:23px;background:#fff;border:3px solid #245b32;border-radius:50%}
+.eye:after{content:"";position:absolute;top:5px;left:5px;width:6px;height:9px;background:#203e2b;border-radius:50%}
+.eye.left{left:18px}.eye.right{right:18px}
+.smile{position:absolute;width:26px;height:10px;border-bottom:3px solid #245b32;border-radius:0 0 50% 50%;bottom:12px;left:34px}
+.robot-body{position:absolute;left:35px;top:85px;width:80px;height:68px;background:#f8fff1;border:4px solid #397e40;border-radius:18px;z-index:2;display:grid;place-items:center}
+.robot-logo{height:35px;width:35px;border-radius:50%;background:#b7f27c;border:3px solid #438d42;display:grid;place-items:center;color:#387b3c;font-size:20px}
+.arm{position:absolute;top:93px;width:25px;height:62px;background:#78cf60;border:4px solid #397e40;border-radius:18px}
+.arm.left{left:17px;transform:rotate(18deg)}.arm.right{right:17px;transform:rotate(-18deg)}
+.leg{position:absolute;top:144px;width:25px;height:37px;background:#78cf60;border:4px solid #397e40;border-radius:7px}
+.leg.left{left:44px}.leg.right{right:44px}
+.shadow{position:absolute;bottom:14px;width:155px;height:15px;background:#d3eac6;border-radius:50%}
+.float-tag{position:absolute;z-index:3;background:#fff;border:1px solid #cde5bf;border-radius:12px;padding:10px 13px;color:#438548;font-weight:900;font-size:12px;box-shadow:0 3px 0 #d3e9c7}
+.float-tag.xp{top:26px;right:0;transform:rotate(8deg)}.float-tag.go{bottom:46px;left:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:20px}
+.stat{display:flex;align-items:center;gap:14px;background:white;border:1px solid var(--line);border-radius:21px;padding:19px 20px;min-height:88px}
+.stat-icon{width:45px;height:45px;flex-shrink:0;border-radius:15px;background:#eaf8df;display:grid;place-items:center;color:#4c9a4d;font-size:23px;font-weight:900}
+.eyebrow{font-size:10px;font-weight:900;letter-spacing:1.4px;color:#879188}
+.stat-value{font-size:24px;font-weight:900;line-height:1.25;margin-top:3px}
+.panels{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-bottom:20px}
+.panel{background:white;border:1px solid var(--line);border-radius:27px;padding:28px 25px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:25px}
+.panel h2{font-size:22px;margin:5px 0 0;font-weight:900;letter-spacing:-.4px}
+.live{background:#eaf8df;color:#4d8b43;border-radius:22px;padding:9px 13px;font-size:10px;font-weight:900;white-space:nowrap}
+.countdown{background:#f1f9e9;border:1px dashed #c9dfbd;border-radius:23px;padding:24px 12px;text-align:center;margin-bottom:17px}
+.time-row{display:flex;justify-content:center;align-items:flex-start;gap:13px}
+.time-unit{min-width:60px}
+.time-number{font-size:clamp(35px,4vw,48px);font-weight:900;color:#367b3c;line-height:1}
+.time-label{font-size:9px;font-weight:900;letter-spacing:1px;color:#81917e;margin-top:8px}
+.colon{font-size:36px;font-weight:900;color:#9fcf8a;line-height:1}
+.focus-note{text-align:center;font-size:12px;color:#879188;margin:17px 0 19px}
+.timer-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.timer-actions .btn{padding:13px 17px}
+.progress{height:8px;background:#edf3e9;border-radius:10px;overflow:hidden;margin-top:22px}
+.progress-fill{height:100%;width:0;background:#7dcc64;border-radius:10px;transition:width .3s}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:10px;font-weight:900;letter-spacing:1.1px;color:#7f8b7e;margin-bottom:9px}
+input,select{width:100%;height:48px;border:1px solid #dfe7db;border-radius:13px;background:#fbfdf9;padding:0 14px;color:#435345;outline:none;font-size:12px}
+input:focus,select:focus{border-color:#8ccc73;box-shadow:0 0 0 3px #edf8e7}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.add-btn{width:100%;margin-top:5px}
+.schedule-panel{background:white;border:1px solid var(--line);border-radius:27px;padding:28px 25px}
+.schedule-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:12px}
+.schedule-head h2{font-size:23px;margin:5px 0 0;font-weight:900}
+.count-pill{background:#eaf8df;color:#4d8b43;border-radius:20px;padding:9px 13px;font-size:10px;font-weight:900;white-space:nowrap}
+.mission-list{display:grid;gap:12px}
+.mission{display:grid;grid-template-columns:55px 1fr auto;gap:15px;align-items:center;border:1px solid #e5ecdf;background:#fbfdf9;border-radius:19px;padding:16px 17px}
+.mission-symbol{width:50px;height:50px;border-radius:15px;background:#eaf8df;display:grid;place-items:center;color:#4d9847;font-size:23px}
+.mission-name{font-weight:900;font-size:15px}
+.mission-meta{font-size:12px;color:#879188;margin:4px 0 9px}
+.mission-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.small-btn{border:1px solid #dce8d6;background:#fff;color:#507b4d;border-radius:10px;padding:7px 10px;font-size:10px;font-weight:900}
+.small-btn:hover{background:#eff8e8}
+.mission-time{text-align:right;white-space:nowrap}
+.mission-time strong{font-size:12px;color:#478448;display:block}
+.mission-time span{font-size:11px;color:#9aa39a;display:block;margin-top:4px}
+.empty{padding:28px;text-align:center;border:1px dashed #dce8d5;border-radius:18px;color:#879188;font-size:13px}
+.footer{text-align:center;color:#a0aa9d;font-size:10px;margin-top:25px;letter-spacing:.5px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#28452e;color:white;padding:12px 18px;border-radius:12px;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:.25s;z-index:10}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:800px){.hero{padding:28px;grid-template-columns:1fr .7fr}.hero h1{font-size:38px}.panels{grid-template-columns:1fr}.panel{padding:24px}.mascot-area{transform:scale(.85)}}
+@media(max-width:600px){.page{width:calc(100% - 22px);margin-top:14px}.topbar{align-items:flex-start}.brand-icon{width:42px;height:42px}.brand-name{font-size:20px}.brand-tag{font-size:8px}.status{font-size:8px;padding:8px}.hero{grid-template-columns:1fr;padding:25px 23px;min-height:0}.hero h1{font-size:39px}.mascot-area{height:225px;transform:none;margin-top:10px}.float-tag.xp{right:8%}.float-tag.go{left:8%}.stats{grid-template-columns:1fr;gap:10px}.stat{min-height:72px;padding:13px 16px}.stat-icon{width:40px;height:40px}.stat-value{font-size:21px}.panels{gap:12px}.panel{border-radius:22px;padding:21px 17px}.panel h2{font-size:20px}.time-number{font-size:36px}.time-unit{min-width:51px}.time-row{gap:7px}.colon{font-size:29px}.schedule-panel{padding:22px 16px;border-radius:22px}.mission{grid-template-columns:43px 1fr;padding:13px;gap:11px}.mission-symbol{width:42px;height:42px}.mission-time{grid-column:2;text-align:left;display:flex;gap:7px;align-items:center}.mission-time strong,.mission-time span{display:inline;margin:0}.form-row{gap:8px}.schedule-head h2{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="topbar">
+<div class="brand">
+<div class="brand-icon">✦</div>
+<div><div class="brand-name">OmniClass</div><div class="brand-tag">YOUR DAILY MISSION CONTROL</div></div>
+</div>
+<div class="status"><span class="status-dot"></span>SYSTEM ONLINE</div>
+</header>
+<section class="hero">
+<div class="hero-copy">
+<div class="pill">✦ OMNITRIX ACTIVE</div>
+<h1>Ready for your <span>next mission?</span></h1>
+<p>Every class is a new adventure. Stay focused and level up!</p>
+<div class="actions"><button class="btn primary" id="startMissionBtn">Start Mission ↗</button><button class="btn" id="viewScheduleBtn">View Schedule</button></div>
+</div>
+<div class="mascot-area">
+<div class="orbit"></div><div class="float-tag xp">+ XP</div><div class="float-tag go">GO!</div>
+<div class="robot">
+<div class="ear left"></div><div class="ear right"></div>
+<div class="robot-head"><div class="eye left"></div><div class="eye right"></div><div class="smile"></div></div>
+<div class="arm left"></div><div class="arm right"></div>
+<div class="robot-body"><div class="robot-logo">✦</div></div>
+<div class="leg left"></div><div class="leg right"></div>
+</div><div class="shadow"></div>
+</div>
+</section>
+<section class="stats">
+<div class="stat"><div class="stat-icon">◷</div><div><div class="eyebrow">LOCAL TIME</div><div class="stat-value" id="localTime">00:00:00</div></div></div>
+<div class="stat"><div class="stat-icon">▣</div><div><div class="eyebrow">TOTAL CLASSES</div><div class="stat-value" id="totalClasses">0</div></div></div>
+<div class="stat"><div class="stat-icon">★</div><div><div class="eyebrow">MISSIONS DONE</div><div class="stat-value" id="missionsDone">0</div></div></div>
+</section>
+<section class="panels">
+<div class="panel" id="timerPanel">
+<div class="panel-head"><div><div class="eyebrow">TIME TRACKER</div><h2>Mission Countdown</h2></div><div class="live">● LIVE</div></div>
+<div class="countdown"><div class="time-row"><div class="time-unit"><div class="time-number" id="hours">00</div><div class="time-label">HOURS</div></div><div class="colon">:</div><div class="time-unit"><div class="time-number" id="minutes">25</div><div class="time-label">MINUTES</div></div><div class="colon">:</div><div class="time-unit"><div class="time-number" id="seconds">00</div><div class="time-label">SECONDS</div></div></div></div>
+<div class="focus-note" id="focusNote">Focus mode activated for 25 minutes!</div>
+<div class="timer-actions"><button class="btn primary" id="restartTimer">↻ Restart Countdown</button><button class="btn" id="resetTimer">↻ Reset</button></div>
+<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="panel" id="addPanel">
+<div class="panel-head"><div><div class="eyebrow">NEW MISSION</div><h2>Add a Class</h2></div><div class="stat-icon">＋</div></div>
+<form id="classForm">
+<div class="form-group"><label for="className">CLASS NAME</label><input id="className" type="text" placeholder="e.g. JavaScript Lab" maxlength="60" required></div>
+<div class="form-row">
+<div class="form-group"><label for="startTime">START TIME</label><input id="startTime" type="time" required></div>
+<div class="form-group"><label for="duration">DURATION</label><select id="duration"><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60" selected>60 minutes</option><option value="90">90 minutes</option><option value="120">120 minutes</option><option value="150">150 minutes</option><option value="180">180 minutes</option></select></div>
+</div>
+<button class="btn primary add-btn" type="submit">＋ Add to Schedule</button>
+</form>
+</div>
+</section>
+<section class="schedule-panel" id="schedulePanel">
+<div class="schedule-head"><div><div class="eyebrow">YOUR DAILY MISSIONS</div><h2>Class Schedule</h2></div><div class="count-pill" id="missionCount">0 missions</div></div>
+<div class="mission-list" id="missionList"></div>
+</section>
+<div class="footer">MADE FOR YOUR NEXT LEVEL · OMNICLASS</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const STORE_KEY='omniclass_missions_v1';
+let missions=[];
+let completed=0;
+let timerLength=25*60;
+let remaining=timerLength;
+let timerInterval=null;
+let timerRunning=true;
+let activeMissionId=null;
+let toastTimeout=null;
+function loadMissions(){try{const saved=JSON.parse(localStorage.getItem(STORE_KEY)||'[]');missions=Array.isArray(saved)?saved:[]}catch(e){missions=[]}}
+function saveMissions(){try{localStorage.setItem(STORE_KEY,JSON.stringify(missions))}catch(e){}}
+function showToast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>t.classList.remove('show'),2400)}
+function updateClock(){$('localTime').textContent=new Date().toLocaleTimeString('en-GB',{hour12:false})}
+function formatTime(value){const [h,m]=value.split(':').map(Number);const d=new Date();d.setHours(h,m,0,0);return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+function endTime(value,duration){const [h,m]=value.split(':').map(Number);const d=new Date();d.setHours(h,m+Number(duration),0,0);return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+function renderMissions(){
+missions.sort((a,b)=>a.start.localeCompare(b.start));
+$('totalClasses').textContent=missions.length;
+$('missionsDone').textContent=missions.filter(m=>m.done).length;
+$('missionCount').textContent=missions.length+' '+(missions.length===1?'mission':'missions');
+const list=$('missionList');
+if(!missions.length){list.innerHTML='<div class="empty">No missions yet. Add your first class above and start leveling up!</div>';return}
+list.innerHTML=missions.map(m=>{
+const state=m.done?'COMPLETED':m.active?'IN PROGRESS':getStatus(m);
+return `<article class="mission"><div class="mission-symbol">${m.done?'✓':'✦'}</div><div class="mission-info"><div class="mission-name">${escapeHtml(m.name)}</div><div class="mission-meta">${m.duration} minutes · ${state}</div><div class="mission-buttons">${!m.done?`<button class="small-btn" data-action="start" data-id="${m.id}">${m.active?'Timer active':'Start timer'}</button><button class="small-btn" data-action="complete" data-id="${m.id}">Complete</button>`:''}<button class="small-btn" data-action="delete" data-id="${m.id}">Delete</button></div></div><div class="mission-time"><strong>${formatTime(m.start)}</strong><span>${m.duration} min</span></div></article>`
+}).join('');
+}
+function getStatus(m){const now=new Date();const [h,min]=m.start.split(':').map(Number);const start=new Date();start.setHours(h,min,0,0);const end=new Date(start.getTime()+m.duration*60000);if(now<start)return 'UPCOMING';if(now<end)return 'ONGOING';return 'PAST DUE'}
+function escapeHtml(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function addMission(e){e.preventDefault();const name=$('className').value.trim();const start=$('startTime').value;const duration=Number($('duration').value);if(!name||!start){showToast('Please enter a class name and start time.');return}missions.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name,start,duration,done:false,active:false});saveMissions();renderMissions();$('classForm').reset();$('duration').value='60';showToast('Class added to your schedule!')}
+function startMission(id){const m=missions.find(x=>x.id===id);if(!m)return;missions.forEach(x=>x.active=false);m.active=true;activeMissionId=id;timerLength=m.duration*60;remaining=timerLength;timerRunning=true;startCountdown();saveMissions();renderMissions();$('timerPanel').scrollIntoView({behavior:'smooth',block:'center'});showToast(m.name+' mission started!')}
+function markComplete(id){const m=missions.find(x=>x.id===id);if(!m)return;m.done=true;m.active=false;if(activeMissionId===id){activeMissionId=null;pauseCountdown()}saveMissions();renderMissions();showToast('Mission completed! Great work.')}
+function deleteMission(id){missions=missions.filter(x=>x.id!==id);if(activeMissionId===id){activeMissionId=null;pauseCountdown();timerLength=1500;remaining=timerLength;drawTimer()}saveMissions();renderMissions();showToast('Mission removed from schedule.')}
+function drawTimer(){const h=Math.floor(remaining/3600);const m=Math.floor((remaining%3600)/60);const s=remaining%60;$('hours').textContent=String(h).padStart(2,'0');$('minutes').textContent=String(m).padStart(2,'0');$('seconds').textContent=String(s).padStart(2,'0');const elapsed=timerLength-remaining;$('progressFill').style.width=Math.max(0,Math.min(100,elapsed/timerLength*100))+'%';$('focusNote').textContent=remaining===0?'Mission time complete! Take a short break.':activeMissionId?'Mission timer is running. Stay focused!':`Focus mode activated for ${Math.round(timerLength/60)} minutes!`}
+function startCountdown(){if(timerInterval)clearInterval(timerInterval);timerRunning=true;drawTimer();timerInterval=setInterval(()=>{if(remaining>0){remaining--;drawTimer()}else{clearInterval(timerInterval);timerInterval=null;timerRunning=false;$('focusNote').textContent='Time is up! Amazing effort — take a short break.';showToast('Countdown complete! Time for a break.');if(activeMissionId){const m=missions.find(x=>x.id===activeMissionId);if(m)m.active=false;activeMissionId=null;saveMissions();renderMissions()}}},1000)}
+function pauseCountdown(){if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerRunning=false}
+function resetCountdown(){pauseCountdown();timerLength=25*60;remaining=timerLength;activeMissionId=null;missions.forEach(m=>m.active=false);saveMissions();renderMissions();drawTimer();showToast('Countdown reset to 25 minutes.')}
+$('classForm').addEventListener('submit',addMission);
+$('restartTimer').addEventListener('click',()=>{remaining=timerLength;startCountdown();showToast('Countdown restarted!')});
+$('resetTimer').addEventListener('click',resetCountdown);
+$('startMissionBtn').addEventListener('click',()=>{const next=missions.find(m=>!m.done);if(next)startMission(next.id);else{remaining=timerLength;startCountdown();$('timerPanel').scrollIntoView({behavior:'smooth',block:'center'});showToast('Focus session started!')}});
+$('viewScheduleBtn').addEventListener('click',()=>$('schedulePanel').scrollIntoView({behavior:'smooth',block:'start'}));
+$('missionList').addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(!b)return;const id=b.dataset.id;const action=b.dataset.action;if(action==='start')startMission(id);if(action==='complete')markComplete(id);if(action==='delete')deleteMission(id)});
+loadMissions();renderMissions();updateClock();setInterval(updateClock,1000);drawTimer();startCountdown();
+</script>
+</body>
+</html>

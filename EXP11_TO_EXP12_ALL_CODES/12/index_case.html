@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rakhi Royale</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar">
+  <a class="logo" href="index.html">Rakhi <span>Royale</span> ✦</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#collections">Collections</a>
+    <a href="#shop">Shop</a>
+  </nav>
+  <a class="cart-link" href="cart.html">Bag <span id="cart-count">0</span> ↗</a>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-copy">
+    <span class="eyebrow">THE ROYAL RAKHI COLLECTION · 2026</span>
+    <h1>A bond woven<br>in <em>gold & love.</em></h1>
+    <p>Discover exquisite handcrafted rakhis, timeless Indian artistry and gifts that make every sibling bond feel extraordinary.</p>
+    <a class="gold-button" href="#shop">Discover the collection <span>↗</span></a>
+    <div class="hero-note"><span>✦</span> Crafted for the ones who mean everything.</div>
+  </div>
+  <div class="hero-visual">
+    <img src="./rakhee/Raksha bandhan.jpeg">
+    <div class="image-caption"><span>THE FESTIVE EDIT</span><strong>Tradition, reimagined.</strong></div>
+    <div class="seal">MADE<br>WITH<br>LOVE ✦</div>
+  </div>
+</section>
+
+<section class="trust-strip">
+  <div><span>✧</span> Thoughtfully curated</div>
+  <div><span>✧</span> Elegant gift packaging</div>
+  <div><span>✧</span> Made for meaningful moments</div>
+</section>
+
+<section class="collection section-wrap" id="collections">
+  <div class="section-heading">
+    <span class="eyebrow">A LITTLE SOMETHING SPECIAL</span>
+    <h2>Explore our <em>world.</em></h2>
+    <p>Traditional soul. Contemporary elegance.</p>
+  </div>
+  <div class="collection-grid">
+    <a class="collection-card" href="#shop">
+      <img src="./rakhee/Raksha Bandhan Rakhi Png PNG Images _ PNG Free Download - Pikbest.jpeg" alt="Traditional kundan rakhi">
+      <div><span>01 / CLASSICS</span><h3>Timeless Traditions ↗</h3></div>
+    </a>
+    <a class="collection-card" href="#shop">
+      <img src="./rakhee/Get Free Luxury Kundan Rakhi PNG  _ Pngfrog_com _ AjuDimple (1).jpeg">
+      <div><span>02 / LUXURY</span><h3>The Royal Edit ↗</h3></div>
+    </a>
+    <a class="collection-card" href="#shop">
+      <img src="./rakhee/Elegant 99_5% Silver Floral Floral Dial Rakhi with Red Crystal & Bead Accents.jpeg" alt="Rakhi gift set">
+      <div><span>03 / GIFTING</span><h3>Gifts from the Heart ↗</h3></div>
+    </a>
+  </div>
+</section>
+
+<section class="shop section-wrap" id="shop">
+  <div class="shop-heading">
+    <div>
+      <span class="eyebrow">SELECTED WITH LOVE</span>
+      <h2>Pieces to <em>treasure.</em></h2>
+    </div>
+    <span class="product-count">THE SIGNATURE COLLECTION · 04 PIECES</span>
+  </div>
+
+  <div class="product-grid">
+    <article class="product-card">
+      <a class="product-image" href="#shop"><img src="./rakhee/Send Rakhi to India - Free Shipping _ Send Rakhi to India Online.jpeg" alt="Crimson kundan rakhi"><span class="product-label">BESTSELLER</span><span class="image-arrow">↗</span></a>
+      <div class="product-meta"><span>01 / HANDCRAFTED</span><span>★★★★★</span></div>
+      <h3>Crimson Kundan</h3>
+      <p>A classic in ruby and gold.</p>
+      <div class="product-bottom"><strong>₹199</strong><button onclick="addToCart(1)">Add to bag +</button></div>
+    </article>
+
+    <article class="product-card">
+      <a class="product-image" href="#shop"><img src="./rakhee/Beautiful Rakhi Wristband on White Background_.jpeg" alt="Pearl and gold rakhi"><span class="product-label">NEW ARRIVAL</span><span class="image-arrow">↗</span></a>
+      <div class="product-meta"><span>02 / ELEGANT</span><span>★★★★★</span></div>
+      <h3>Pearl Heritage</h3>
+      <p>Understated beauty, forever.</p>
+      <div class="product-bottom"><strong>₹249</strong><button onclick="addToCart(2)">Add to bag +</button></div>
+    </article>
+
+    <article class="product-card">
+      <a class="product-image" href="#shop"><img src="./rakhee/Elegant 99_5% Silver Floral Floral Dial Rakhi with Red Crystal & Bead Accents.jpeg" alt="Gold floral rakhi"><span class="product-label">SIGNATURE</span><span class="image-arrow">↗</span></a>
+      <div class="product-meta"><span>03 / ARTISANAL</span><span>★★★★★</span></div>
+      <h3>Golden Bloom</h3>
+      <p>Intricate details, warm gold.</p>
+      <div class="product-bottom"><strong>₹299</strong><button onclick="addToCart(3)">Add to bag +</button></div>
+    </article>
+
+    <article class="product-card">
+      <a class="product-image" href="#shop"><img src="./rakhee/Download Vibrant Indian sweets platter offers delicious festive indulgence and celebratory treats for free.jpeg" alt="Luxury rakhi gift set"><span class="product-label">GIFT EDIT</span><span class="image-arrow">↗</span></a>
+      <div class="product-meta"><span>04 / GIFT-READY</span><span>★★★★★</span></div>
+      <h3>The Celebration Box</h3>
+      <p>A little extra love, beautifully wrapped.</p>
+      <div class="product-bottom"><strong>₹499</strong><button onclick="addToCart(4)">Add to bag +</button></div>
+    </article>
+  </div>
+</section>
+
+<section class="closing-banner">
+  <span class="eyebrow">MORE THAN A THREAD</span>
+  <h2>Some bonds are <em>golden.</em></h2>
+  <p>Celebrate your favourite person with a gift that says it all.</p>
+  <a class="gold-button" href="#shop">Find their rakhi ↗</a>
+</section>
+</main>
+
+<footer>
+  <a class="logo" href="index.html">Rakhi <span>Royale</span> ✦</a>
+  <p>For every memory, every laugh, every forever.</p>
+  <div>© 2026 RAKHI ROYALE · MADE WITH LOVE</div>
+</footer>
+
+<script>
+const products = [
+  {id:1,name:"Crimson Kundan",price:199,image:"images/rakhi-1.jpg"},
+  {id:2,name:"Pearl Heritage",price:249,image:"images/rakhi-2.jpg"},
+  {id:3,name:"Golden Bloom",price:299,image:"images/rakhi-3.jpg"},
+  {id:4,name:"The Celebration Box",price:499,image:"images/rakhi-4.jpg"}
+];
+
+function getCart(){
+  return JSON.parse(localStorage.getItem("rakhiRoyaleCart") || "[]");
+}
+
+function saveCart(cart){
+  localStorage.setItem("rakhiRoyaleCart",JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount(){
+  const count=document.getElementById("cart-count");
+  if(count) count.textContent=getCart().reduce((sum,item)=>sum+item.qty,0);
+}
+
+function addToCart(id){
+  const cart=getCart();
+  const existing=cart.find(item=>item.id===id);
+  if(existing) existing.qty++;
+  else cart.push({...products.find(product=>product.id===id),qty:1});
+  saveCart(cart);
+  const button=event.currentTarget;
+  button.textContent="Added ✓";
+  setTimeout(()=>button.textContent="Add to bag +",1000);
+}
+
+updateCartCount();
+</script>
+<div style="position: fixed; bottom: 10px; right: 10px; font-family: sans-serif; fontsize: 14px; color: #da1111; background-color: rgba(255, 208, 0, 0.8); padding: 5px 10px;
+border-radius: 4px; z-index: 1000;">
+ Name: M HUSSAIN KHAN <br>
+ PRN: 8482871166
+</div> 
+</body>
+</html>
